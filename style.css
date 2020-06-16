@@ -31,22 +31,40 @@ body{
 }
 
 /* NAV */
-#title{
+.appBar{
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
+    width: 100%;
+    padding-left: 16px;
+    margin-bottom: 4px;
+}
+.title{
     font-size: 20px;
     vertical-align: middle;
     font-weight: 500;
 }
+.selectTitle{
+    height: 56px;
+    line-height: 56px;
+    vertical-align: middle;
+}
 .bison{
     height: 25px;
     width: 25px;
-    margin: 16px 16px 16px 0px;
+    margin: 16px 24px 16px 0px;
     vertical-align: middle;
+}
+.x{
+    height: 15px;
+    width: 15px;
+    vertical-align: middle;
+    margin: 16px 24px 16px 0px;
 }
 
 /* MAIN */
 .lineWrapper{
     height: 48px;
     clear: both;
+    border-radius: 4px;
 }
 .lineWrapper img, .lineWrapper div{
     line-height: 48px;
@@ -61,13 +79,25 @@ body{
     display: inline;
     vertical-align: middle;
 }
+.lineInput{
+    vertical-align: middle;
+    width: 80%;
+    border: none;
+    height: 90%;
+    outline: none;
+    font-size: 16px;
+}
+.lineFocus{
+    border-bottom: 2px solid #7E8959;
+}
 .arrow{
     vertical-align: middle;
     float: right;
-    margin-top: 12px;
-    width: 22px;
-    -webkit-transform: rotate(-90deg);
-          transform: rotate(-90deg);
+    margin-top: 18px;
+    width: 14px;
+    height: auto;
+    -webkit-transform: rotate(180deg);
+          transform: rotate(180deg);
 }
 .countContainer{
     text-align: left;
@@ -122,6 +152,17 @@ h2{
     margin-bottom: 16px;
     clear: both;
 }
+
+/* Selecting Options */
+
+.optionWrap{
+    margin: 16px;
+}
+option{
+    height: 40px;
+    width: 100%
+}
+
 /* css for hamburger menu */
 a {
     text-decoration: none;
