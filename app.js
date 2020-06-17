@@ -5,8 +5,42 @@ var app = new Vue({
     el: '#app',
     vuetify: new Vuetify(),
     data: {
+        dialogm1: '',
+        dialog: false,
         page: 'main',
-        trails: ['1', '2'],
+        trails: ['Bald Peak and Parkman Mountain',
+                'Beachcroft and Champlain South Ridge',
+                'Beech Mountain South Ridge Loop',
+                'Beehive Loop',
+                'Cadillac Mountain South Ridge',
+                'Canada Cliffs Loop',
+                'Dorr Mountain South Ridge Loop',
+                'Flying Mountain Loop',
+                'Giant Slide Loop',
+                'Gorge and A Murray Young Path Route',
+                'Gorham Mountain Loop',
+                'Great Head Trail',
+                'Great Meadow Loop',
+                'Jesup Path and Hemlock Road Loop',
+                'Jordan Cliffs Loop',
+                'Jordan Pond Path',
+                'North Bubble Loop',
+                'Norumbega Mountain Loop',
+                'Ocean Path',
+                'Pemetic Mountain Loop',
+                'Penobscot and Sargent Mountain Loop',
+                'Perpendicular and Razorback Loop',
+                'Precipice Loop',
+                'Saint Sauveur and Acadia Mountain',
+                'Schoodic Bike Paths',
+                'Schoodic Hiking Trails',
+                'Ship Harbor Trail',
+                'Wonderland Trail',
+            ],
+        weatherConditions: ['Sunny', 'Mostly Sunny', 'Cloudy', 'Thunder Storms', 'Rain Showers', 'Rain', 'Sleet', 'Snow', 'Haze', 'Smokey'],
+        visitations: ['Not busy', 'Not too busy', 'Little busy', 'Busy as it gets'],
+        statuses: ['Clear', 'Minor Issue', 'Significant Issue', 'Closed or Major Issue'],
+        conditions: ['Dry/Normal Summer Conditions', 'Mostly Dry (some water)', 'Wet and Slippery', 'Snow', 'Some Snow', 'Snow and Ice'],
 
         currentName: 'Staff/Vip Name(s)',
         currentDate: '',
@@ -20,7 +54,7 @@ var app = new Vue({
         name_selected: false,
         date_selected: false,
         trail_selected: false,
-        walk_selected: true,
+        foot_selected: true,
         run_selected: false,
         bike_selected: false,
         e_selected: false,
@@ -32,8 +66,8 @@ var app = new Vue({
         status_selected: false,
         condition_selected: false,
 
-        walkUp: 0,
-        walkDown: 0,
+        footUp: 0,
+        footDown: 0,
         runUp: 0,
         runDown: 0,
         bikeUp: 0,
@@ -45,17 +79,56 @@ var app = new Vue({
         dogUp: 0,
         dogDown: 0,
 
-        walkRotation: 180,
+        footRotation: 180,
         runRotation: 0,
         bikeRotation: 0,
         eRotation: 0,
         horseRotation: 0,
         dogRotation: 0,
+
+        startTime: '',
+        endTime: '',
+        latitude: '',
+        longitude: '',
+        nameError: false,
+        dateError: false,
     },
     created: function(){
         this.loadDate();
     },
+    //used to find location:
+    mounted(){
+        
+        function error() {
+            status.textContent = 'Unable to retrieve your location';
+        }
+
+        if (!navigator.geolocation) {
+            status.textContent = 'Geolocation is not supported by your browser';
+        }
+        else {
+            status.textContent = 'Locating…';
+            navigator.geolocation.getCurrentPosition(this.handleGetGeoLocation, error);
+        }
+    },
     methods: {
+        // LOCATION
+        handleGetGeoLocation(pos){
+            var crd = pos.coords;
+
+            const status = document.querySelector('#status');
+            const latitude  = crd.latitude;
+            const longitude = crd.longitude;
+
+            console.log('Your current position is:');
+            console.log(`Latitude : ${latitude}`);
+            console.log(`Longitude: ${longitude}`);
+            console.log(`More or less ${crd.accuracy} meters.`);
+
+            this.latitude = latitude;
+            this.longitude = longitude;
+        },
+
         // INPUTS
         loadDate: function(){
             var date = new Date();
@@ -64,6 +137,7 @@ var app = new Vue({
 
             var fulldate = days[date.getDay()] + ", " + months[date.getMonth()] + " " + date.getDate() + " " + date.getFullYear();
             this.currentDate = fulldate;
+            this.startTime = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
         },
         nameClicked: function(){
             this.name_selected = true;
@@ -73,37 +147,27 @@ var app = new Vue({
         },
         outsideName: function(){
             this.name_selected = false;
+            this.nameError = false;
             if(this.currentName == ""){
                 this.currentName = "Staff/Vip Name(s)";
+                this.nameError = true;
             }
         },
         trailClicked: function(){
             this.page = "trailSelect";
         },
-        outsideTrail: function(){
-            this.trail_selected = false;
-            if(this.currenttrail == ""){
-                this.currenttrail = "Trail or Segment Name";
-            }
+        weatherClicked: function(){
+            this.page = "weatherSelect";
         },
 
         // BUTTONS
-        walkingClicked: function(){
-            if (this.walk_selected == true){
-                this.walk_selected = false;
-                this.walkRotation = 0;
+        footClicked: function(){
+            if (this.foot_selected == true){
+                this.foot_selected = false;
+                this.footRotation = 0;
             }else{
-                this.walk_selected = true;
-                this.walkRotation = 180;
-            }
-        },
-        runningClicked: function(){
-            if (this.run_selected == true){
-                this.run_selected = false;
-                this.runRotation = 0;
-            }else{
-                this.run_selected = true;
-                this.runRotation = 180;
+                this.foot_selected = true;
+                this.footRotation = 180;
             }
         },
         bikeClicked: function(){
@@ -140,6 +204,108 @@ var app = new Vue({
             }else{
                 this.dog_selected = true;
                 this.dogRotation = 180;
+            }
+        },
+        outsideOverlay: function(){
+            this.notes_selected = false;
+            this.visitation_selected = false;
+            this.status_selected = false;
+            this.condition_selected = false;
+            if(this.currentNotes == ""){
+                this.currentNotes = "Notes";
+            }
+            if(this.currentVisitation == ""){
+                this.currentName = "Visitation";
+            }
+            if(this.currentStatus == ""){
+                this.currentStatus = "Trail Status";
+            }
+            if(this.currentCondition == ""){
+                this.currentCondition = "Trail Condition";
+            }
+        },
+        doneClicked: function(){
+            this.notes_selected = false;
+            if(this.currentNotes == ""){
+                this.currentNotes = "Notes";
+            }
+        },
+        sendClicked: function(){
+            var endDate = new Date();
+            this.endTime = endDate.getHours() + ":" + endDate.getMinutes() + ":" + endDate.getSeconds();
+            this.checkNulls();
+            if (this.currentName && this.currentName != "Staff/Vip Name(s)" && this.currentDate) {
+                //The email call should go here:
+                //->
+                var park = "Acadia%20Data%20Submission";
+                window.location.href="mailto:" + "?subject=" + park + "&body=" + 
+                    this.currentName + ";" +
+                    this.currentDate + ";" +
+                    this.startTime + ";" +
+                    this.endTime + ";" +
+                    this.currentTrailSending + ";" +
+                    this.latitude + ";" +
+                    this.longitude + ";" +
+                    this.footUp + ";" + 
+                    this.footDown + ";" +
+                    this.bikeUp + ";" + 
+                    this.bikeDown + ";" +
+                    this.eUp + ";" + 
+                    this.eDown + ";" +
+                    this.horseUp + ";" + 
+                    this.horseDown + ";" +
+                    this.dogUp + ";" + 
+                    this.dogDown + ";" + 
+                    this.currentWeatherSending + ";" + 
+                    this.currentVisitationSending + ";" +
+                    this.currentStatusSending + ";" + 
+                    this.currentConditionSending + ";" +
+                    this.notesSending + ";"
+                ;
+            }else {
+                if (!this.currentName || this.currentName == "Staff/Vip Name(s)") {
+                    this.nameError = true;
+                }
+                if (!this.currentDate) {
+                    this.dateError = true;
+                }
+            }
+        },
+        checkNulls: function(){
+            if (this.currentTrail == "Trail or Segment Name"){
+                this.currentTrailSending = null;
+            }else{
+                this.currentTrailSending = this.currentTrail;
+            }
+
+            if(this.currentWeather == "Weather"){
+                this.currentWeatherSending = null;
+            }else{
+                this.currentWeatherSending = this.currentWeather;
+            }
+
+            if(this.currentNotes == "Notes"){
+                this.currentNotesSending = null;
+            }else{
+                this.currentNotesSending = this.currentNotes;
+            }
+
+            if(this.currentVisitation == "Visitation"){
+                this.currentVisitationSending = null;
+            }else{
+                this.currentVisitationSending = this.currentVisitation;
+            }
+
+            if(this.currentStatus == "Trail Status"){
+                this.currentStatusSending = null;
+            }else{
+                this.currentStatusSending = this.currentStatus;
+            }
+
+            if(this.currentCondition == "Trail Conditions"){
+                this.currentConditionSending = null;
+            }else{
+                this.currentConditionSending = this.currentCondition;
             }
         },
     },

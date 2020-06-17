@@ -11,12 +11,17 @@
 html, body{
     margin: 0;
     padding: 0;
+    min-height: 100%;
 }
-body{
+body, textarea{
     font-family: 'myRoboto';
     font-style: normal;
     font-size: 16px;
     font-weight: normal;
+    position: relative;
+}
+textarea{
+    font-size: 12px;
 }
 .wrapper, .wrapper2{
     border-bottom: 1px solid #E5E5E5;
@@ -48,9 +53,9 @@ body{
     vertical-align: middle;
 }
 .bison{
-    height: 25px;
-    width: 25px;
-    margin: 16px 24px 16px 0px;
+    height: 35px;
+    width: 35px;
+    margin: 10px 14px 10px 0px;
     vertical-align: middle;
 }
 .x{
@@ -65,6 +70,7 @@ body{
     height: 48px;
     clear: both;
     border-radius: 4px;
+    overflow: hidden;
 }
 .lineWrapper img, .lineWrapper div{
     line-height: 48px;
@@ -152,15 +158,110 @@ h2{
     margin-bottom: 16px;
     clear: both;
 }
+.overlay{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    background-color: rgba(0,0,0,0.5);
+}
+#centerP{
+    text-align: center;
+    font-size: 14px;
+    margin-top: 4px;
+}
+.errorMessages, ul{
+    list-style: none;
+    color:#EF2121;
+    vertical-align: middle;
+    margin-left: -18px !important;
+}
+.errorBorder{
+    border: 2px solid #EF2121;
+    border-radius: 4px;
+}
+.ul2{
+    margin-top: 4px !important;
+    margin-bottom: 0px !important;
+    margin-left: -20px !important;
+}
+.errorImg{
+    height: 20px;
+    width: 20px;
+    margin-right: 20px;
+    vertical-align: middle;
+}
 
 /* Selecting Options */
 
 .optionWrap{
     margin: 16px;
 }
+.optionWrap2{
+    background-color: #FFFFFF;
+    width: 70%;
+    height: 160px;
+    position: fixed;
+    left: 0;
+    right: 0;
+    margin: auto;
+    top: 0;
+    bottom: 0;
+    padding-top: 16px;
+    padding-left: 16px;
+    padding-right: 16px;
+    border-radius: 8px;
+}
+.optionWrap3{
+    height: 240px;
+}
+.notesWrap{
+    height: 300px;
+}
 option{
     height: 40px;
     width: 100%
+}
+.notes{
+    width: 100%;
+    height: 220px;
+    padding: 12px 20px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    background-color: #f8f8f8;
+    resize: none;
+}
+.notesBtn, .cancel{
+    width: 72px;
+    height: 36px;
+    border-radius: 4px;
+    margin-top: 16px;
+    margin-bottom: 16px;
+}
+.clear{
+    float: left;
+    background-color: white;
+    border: 2px solid #7E8959;
+    color: #7E8959;
+}
+.done{
+    float: right;
+    background-color: #7E8959;
+    color: white;
+    border: none;
+}
+.cancel{
+    float: right;
+    position: fixed;
+    bottom: 16px;
+    right: 16px;
+    color: #7E8959;
+    border: none;
+    background-color: white;
+    font-size: 16px;
 }
 
 /* css for hamburger menu */

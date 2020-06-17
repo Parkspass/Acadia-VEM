@@ -12,14 +12,19 @@
     <div id="app">
         <div v-if="page=='main'">
             <div class="appBar"> <!-- App bar for login page -->
-                <div class="title"><img class="bison" src="icons/up biking.svg">Acadia VEM</div>
+                <div class="title"><img class="bison" src="icons/bison green.svg">Acadia VEM</div>
             </div>
             <div class="wrapper">
                 <div class="contentWrapper">
-                    <div class="lineWrapper" @click="nameClicked" v-click-outside="outsideName" :class="{lineFocus:name_selected}">
+                    <div class="lineWrapper" @click="nameClicked" v-click-outside="outsideName" :class="{lineFocus:name_selected, errorBorder:nameError}">
                         <img class="lineIcon" src="icons/name_button.svg">
                         <input v-if="name_selected" v-model="currentName" class="lineInput">
                         <div class="line" v-else>{{currentName}}</div>
+                    </div>
+                    <div v-if="nameError">
+                        <ul class="ul2">
+                            <li v-if="nameError" class="errorMessages"><img class="errorImg" src="icons/alert.svg">Name required.</li>
+                        </ul>
                     </div>
 
                     <div class="lineWrapper">
@@ -28,7 +33,7 @@
                         <div class="line" v-else>{{currentDate}}</div>
                     </div>
 
-                    <div class="lineWrapper" @click="trailClicked" v-click-outside="outsideTrail" :class="{lineFocus:trail_selected}">
+                    <div class="lineWrapper" @click="trailClicked" :class="{lineFocus:trail_selected}">
                         <img class="lineIcon" src="icons/trail_button.svg">
                         <div class="line">{{currentTrail}}</div>
                     </div>
@@ -37,43 +42,23 @@
 
             <div class="wrapper">
                 <div class="contentWrapper">
-                    <!-- Walking -->
-                    <div class="lineWrapper" @click="walkingClicked()">
+                    <!-- on foot -->
+                    <div class="lineWrapper" @click="footClicked()">
                         <img class="lineIcon" src="icons/directions_walk-24px 1.svg">
-                        <div class="line">Walking</div>
-                        <img class="arrow" src="icons/arrow.svg" :style="`transform: rotate(${walkRotation}deg);`">
+                        <div class="line">On Foot</div>
+                        <img class="arrow" src="icons/arrow.svg" :style="`transform: rotate(${footRotation}deg);`">
                     </div>
                     
                     <div style="display: block;">
-                        <div v-if="walk_selected" class="countContainer left" @click="walkUp+=1">
+                        <div v-if="foot_selected" class="countContainer left" @click="footUp+=1">
                             <h1>Number of Encounters</h1>
-                            <h2>{{walkUp}}</h2>
+                            <h2>{{footUp}}</h2>
                             <img class="countBtn" src="icons/up walking.svg">
                         </div>
-                        <div v-if="walk_selected" class="countContainer right" @click="walkDown+=1">
+                        <div v-if="foot_selected" class="countContainer right" @click="footDown+=1">
                             <h1>Number of Encounters</h1>
-                            <h2>{{walkDown}}</h2>
+                            <h2>{{footDown}}</h2>
                             <img class="countBtn" src="icons/down walking.svg">
-                        </div>
-                    </div>
-
-                    <!-- Running -->
-                    <div class="lineWrapper" @click="runningClicked()">
-                        <img class="lineIcon" src="icons/directions_run-24px 1.svg">
-                        <div class="line">Running</div>
-                        <img class="arrow" src="icons/arrow.svg" :style="`transform: rotate(${runRotation}deg);`">
-                    </div>
-
-                    <div style="display: block;">
-                        <div v-if="run_selected" class="countContainer left" @click="runUp+=1">
-                            <h1>Number of Encounters</h1>
-                            <h2>{{runUp}}</h2>
-                            <img class="countBtn" src="icons/up running.svg">
-                        </div>
-                        <div v-if="run_selected" class="countContainer right" @click="runDown+=1">
-                            <h1>Number of Encounters</h1>
-                            <h2>{{runDown}}</h2>
-                            <img class="countBtn" src="icons/down running.svg">
                         </div>
                     </div>
 
@@ -161,50 +146,89 @@
 
             <div class="wrapper2">
                 <div class="contentWrapper">
-                    <div class="lineWrapper">
+                    <div class="lineWrapper" @click="weatherClicked">
                         <img class="lineIcon" src="icons/weather_button.svg">
-                        <input v-if="weather_selected" class="lineInput">
-                        <div class="line" v-else>{{currentWeather}}</div>
+                        <div class="line">{{currentWeather}}</div>
                     </div>
 
-                    <div class="lineWrapper">
+                    <div class="lineWrapper" @click="notes_selected=true">
                         <img class="lineIcon" src="icons/notes_button.svg">
-                        <input v-if="notes_selected" class="lineInput">
-                        <div class="line" v-else>{{currentNotes}}</div>
+                        <div class="line">{{currentNotes}}</div>
                     </div>
 
-                    <div class="lineWrapper">
+                    <div class="lineWrapper" @click="visitation_selected=true">
                         <img class="lineIcon" src="icons/visitation_button.svg">
-                        <input v-if="visitation_selected" class="lineInput">
-                        <div class="line" v-else>{{currentVisitation}}</div>
+                        <div class="line">{{currentVisitation}}</div>
                     </div>
 
-                    <div class="lineWrapper">
+                    <div class="lineWrapper" @click="status_selected=true">
                         <img class="lineIcon" src="icons/trail_status_button.svg">
-                        <input v-if="status_selected" class="lineInput">
-                        <div class="line" v-else>{{currentStatus}}</div>
+                        <div class="line">{{currentStatus}}</div>
                     </div>
 
-                    <div class="lineWrapper">
+                    <div class="lineWrapper" @click="condition_selected=true">
                         <img class="lineIcon" src="icons/trail_conditions_button.svg">
-                        <input v-if="condition_selected" class="lineInput">
-                        <div class="line" v-else>{{currentCondition}}</div>
+                        <div class="line">{{currentCondition}}</div>
                     </div>
 
-                    <button id="addPicture">ADD PICTURE<img id="camera" src="icons/camera.svg"></button>
-                    <button id="send">SEND</button>
+                    <input class="hide_file" type="file" ref="file" name="image" accept="image/*" capture="environment" style="display:none;border:none;">
+                    <button id="addPicture" @click="$refs.file.click()">ADD PICTURE<img id="camera" src="icons/camera.svg"></button>
+                    <p id="centerP">Please insert the taken photo into the email.</p>
+
+                    <div v-if="nameError || dateError">
+                        <ul>
+                            <li v-if="nameError" class="errorMessages"><img class="errorImg" src="icons/alert.svg">Name required.</li>
+                            <li v-if="dateError" class="errorMessages">Date required.</li>
+                        </ul>
+                    </div>
+
+                    <button id="send" @click="sendClicked">SEND</button>
+                </div>
+            </div>
+
+            <div class="overlay" v-if="notes_selected">
+                <div class="optionWrap2 notesWrap" v-click-outside="outsideOverlay">
+                    <textarea type="text" class="notes" maxlength="300" v-model="currentNotes">{{currentNotes}}</textarea>
+                    <button class="notesBtn clear" @click="currentNotes=''">Clear</button>
+                    <button class="notesBtn done" @click="doneClicked">Done</button>
+                </div>
+            </div>
+
+            <div class="overlay" v-if="visitation_selected">
+                <div class="optionWrap2" v-click-outside="outsideOverlay">
+                    <option v-for="visit in visitations" @click="currentVisitation=visit; visitation_selected=false">{{visit}}</option>
+                </div>
+            </div>
+
+            <div class="overlay" v-if="status_selected">
+                <div class="optionWrap2" v-click-outside="outsideOverlay">
+                    <option v-for="status in statuses" @click="currentStatus=status; status_selected=false">{{status}}</option>
+                </div>
+            </div>
+
+            <div class="overlay" v-if="condition_selected">
+                <div class="optionWrap2 optionWrap3" v-click-outside="outsideOverlay">
+                    <option v-for="condition in conditions" @click="currentCondition=condition; condition_selected=false">{{condition}}</option>
                 </div>
             </div>
         </div>
 
         <div class="wrapper" v-if="page=='trailSelect'">
-            <div class="appBar"> <!-- App bar for login page -->
+            <div class="appBar"> <!-- App bar for trail select page -->
                 <div class="title selectTitle"><img class="x" src="icons/x.svg" @click="page='main'">Select Trail or Segment</div>
             </div>
             <div class="optionWrap" v-model="currentTrail">
                 <option v-for="trail in trails" @click="currentTrail=trail; page='main'">{{trail}}</option>
             </div>
-            
+            <button class="cancel" @click="page='main'">Cancel</button>
+        </div>
+        <div class="wrapper" v-if="page=='weatherSelect'">
+            <div class="appBar"> <!-- App bar for weather select page -->
+                <div class="title selectTitle"><img class="x" src="icons/x.svg" @click="page='main'">Select Weather Condition</div>
+            </div>
+            <div class="optionWrap" v-model="currentWeather">
+                <option v-for="weather in weatherConditions" @click="currentWeather=weather; page='main'">{{weather}}</option>
+            </div>
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
