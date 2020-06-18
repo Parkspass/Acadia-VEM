@@ -6,7 +6,11 @@
     <meta content="utf-8" http-equiv="encoding">
     <title>Acadia Counting</title>
     <link rel="stylesheet" type="text/css" href="style.css">
-    <!-- Here we need to place the product link: -->
+    <link rel="manifest" href="manifest.json">
+    <!-- ios Support -->
+    <link rel="apple-touch-icon" href="/icons/pwa_icons/apple-touch-icon.png">
+    <meta name="apple-mobile-web-app-status-bar" content="#7E8959">
+    <meta name="theme-color" content="#7E8959">
 </head>
 <body>
     <div id="app">
@@ -173,7 +177,7 @@
 
                     <input class="hide_file" type="file" ref="file" name="image" accept="image/*" capture="environment" style="display:none;border:none;">
                     <button id="addPicture" @click="$refs.file.click()">ADD PICTURE<img id="camera" src="icons/camera.svg"></button>
-                    <p id="centerP">Please insert the taken photo into the email.</p>
+                    <p id="centerP">Please insert the taken photo(s) into the email.</p>
 
                     <div v-if="nameError || dateError">
                         <ul>
@@ -222,6 +226,7 @@
             </div>
             <button class="cancel" @click="page='main'">Cancel</button>
         </div>
+
         <div class="wrapper" v-if="page=='weatherSelect'">
             <div class="appBar"> <!-- App bar for weather select page -->
                 <div class="title selectTitle"><img class="x" src="icons/x.svg" @click="page='main'">Select Weather Condition</div>
@@ -229,10 +234,10 @@
             <div class="optionWrap" v-model="currentWeather">
                 <option v-for="weather in weatherConditions" @click="currentWeather=weather; page='main'">{{weather}}</option>
             </div>
+            <button class="cancel" @click="page='main'">Cancel</button>
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
     <script src="app.js"></script>
 </body>
 </html>

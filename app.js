@@ -1,9 +1,14 @@
 /*jshint esversion: 6 */
 console.log('connected');
 
+if('serviceWorker' in navigator){
+    navigator.serviceWorker.register('sw.js')
+        .then((reg) => console.log("Service Worker Registered", reg))
+        .catch((err) => console.log("Service Worker Not Registered", err));
+}
+
 var app = new Vue({
     el: '#app',
-    vuetify: new Vuetify(),
     data: {
         dialogm1: '',
         dialog: false,
@@ -148,7 +153,7 @@ var app = new Vue({
         outsideName: function(){
             this.name_selected = false;
             this.nameError = false;
-            if(this.currentName == ""){
+            if(this.currentName == "" || this.currentName == "Staff/Vip Name(s)"){
                 this.currentName = "Staff/Vip Name(s)";
                 this.nameError = true;
             }
@@ -260,7 +265,7 @@ var app = new Vue({
                     this.currentVisitationSending + ";" +
                     this.currentStatusSending + ";" + 
                     this.currentConditionSending + ";" +
-                    this.notesSending + ";"
+                    this.currentNotesSending + ";"
                 ;
             }else {
                 if (!this.currentName || this.currentName == "Staff/Vip Name(s)") {
