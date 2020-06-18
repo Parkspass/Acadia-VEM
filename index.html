@@ -191,7 +191,7 @@
             </div>
 
             <div class="overlay" v-if="notes_selected">
-                <div class="optionWrap2 notesWrap" v-click-outside="outsideOverlay">
+                <div class="optionWrap2 notesWrap">
                     <textarea type="text" class="notes" maxlength="300" v-model="currentNotes">{{currentNotes}}</textarea>
                     <button class="notesBtn clear" @click="currentNotes=''">Clear</button>
                     <button class="notesBtn done" @click="doneClicked">Done</button>
@@ -199,19 +199,19 @@
             </div>
 
             <div class="overlay" v-if="visitation_selected">
-                <div class="optionWrap2" v-click-outside="outsideOverlay">
+                <div class="optionWrap2">
                     <option v-for="visit in visitations" @click="currentVisitation=visit; visitation_selected=false">{{visit}}</option>
                 </div>
             </div>
 
             <div class="overlay" v-if="status_selected">
-                <div class="optionWrap2" v-click-outside="outsideOverlay">
+                <div class="optionWrap2">
                     <option v-for="status in statuses" @click="currentStatus=status; status_selected=false">{{status}}</option>
                 </div>
             </div>
 
             <div class="overlay" v-if="condition_selected">
-                <div class="optionWrap2 optionWrap3" v-click-outside="outsideOverlay">
+                <div class="optionWrap2 optionWrap3">
                     <option v-for="condition in conditions" @click="currentCondition=condition; condition_selected=false">{{condition}}</option>
                 </div>
             </div>

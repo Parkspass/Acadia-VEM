@@ -211,24 +211,6 @@ var app = new Vue({
                 this.dogRotation = 180;
             }
         },
-        outsideOverlay: function(){
-            this.notes_selected = false;
-            this.visitation_selected = false;
-            this.status_selected = false;
-            this.condition_selected = false;
-            if(this.currentNotes == ""){
-                this.currentNotes = "Notes";
-            }
-            if(this.currentVisitation == ""){
-                this.currentName = "Visitation";
-            }
-            if(this.currentStatus == ""){
-                this.currentStatus = "Trail Status";
-            }
-            if(this.currentCondition == ""){
-                this.currentCondition = "Trail Condition";
-            }
-        },
         doneClicked: function(){
             this.notes_selected = false;
             if(this.currentNotes == ""){
