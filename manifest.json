@@ -1,7 +1,7 @@
 {
     "name": "Acadia Count",
     "short_name": "AcadiaCount",
-    "start_url": "/index.html",
+    "start_url": ".",
     "display": "standalone",
     "orientation": "portrait-primary",
     "theme_color": "#7E8959",
