@@ -20,7 +20,7 @@
             </div>
             <div class="wrapper">
                 <div class="contentWrapper">
-                    <div class="lineWrapper" @click="nameClicked" v-click-outside="outsideName" :class="{lineFocus:name_selected, errorBorder:nameError}">
+                    <div class="lineWrapper" @click="nameClicked" :class="{lineFocus:name_selected, errorBorder:nameError}">
                         <img class="lineIcon" src="icons/name_button.svg">
                         <input v-if="name_selected" v-model="currentName" class="lineInput">
                         <div class="line" v-else>{{currentName}}</div>
@@ -31,20 +31,20 @@
                         </ul>
                     </div>
 
-                    <div class="lineWrapper">
+                    <div class="lineWrapper" @click="outsideName">
                         <img class="lineIcon" src="icons/date_button.svg">
                         <input v-if="date_selected" class="lineInput">
                         <div class="line" v-else>{{currentDate}}</div>
                     </div>
 
-                    <div class="lineWrapper" @click="trailClicked" :class="{lineFocus:trail_selected}">
+                    <div class="lineWrapper" @click="trailClicked(), outsideName" :class="{lineFocus:trail_selected}">
                         <img class="lineIcon" src="icons/trail_button.svg">
                         <div class="line">{{currentTrail}}</div>
                     </div>
                 </div>
             </div>
 
-            <div class="wrapper">
+            <div class="wrapper" @click="outsideName">
                 <div class="contentWrapper">
                     <!-- on foot -->
                     <div class="lineWrapper" @click="footClicked()">
@@ -148,7 +148,7 @@
                 </div>
             </div>
 
-            <div class="wrapper2">
+            <div class="wrapper2" @click="outsideName">
                 <div class="contentWrapper">
                     <div class="lineWrapper" @click="weatherClicked">
                         <img class="lineIcon" src="icons/weather_button.svg">
