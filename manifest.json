@@ -31,41 +31,6 @@
             "src": "icons/pwa_icons/favicon-32x32.png",
             "type": "image/png",
             "sizes": "32x32"
-        },
-        {
-            "src": "icons/sizes/mipmap-hdpi/ic_launcher.png",
-            "type": "image/png",
-            "sizes": "72x72"
-        },
-        {
-            "src": "icons/sizes/ios/Icon-App-20x20@1x.png",
-            "type": "image/png",
-            "sizes": "20x20"
-        },
-        {
-            "src": "icons/sizes/ios/Icon-App-29x29@1x.png",
-            "type": "image/png",
-            "sizes": "29x29"
-        },
-        {
-            "src": "icons/sizes/ios/Icon-App-40x40@1x.png",
-            "type": "image/png",
-            "sizes": "40x40"
-        },
-        {
-            "src": "icons/sizes/ios/Icon-App-60x60@1x.png",
-            "type": "image/png",
-            "sizes": "60x60"
-        },
-        {
-            "src": "icons/sizes/ios/Icon-App-76x76@1x.png",
-            "type": "image/png",
-            "sizes": "76x76"
-        },
-        {
-            "src": "icons/sizes/ios/Icon-App-83.5x83.5@2x.png",
-            "type": "image/png",
-            "sizes": "83.5x83.5"
         }
     ]
 }
