@@ -200,19 +200,19 @@
 
             <div class="overlay" v-if="visitation_selected">
                 <div class="optionWrap2">
-                    <option v-for="visit in visitations" @click="currentVisitation=visit; visitation_selected=false">{{visit}}</option>
+                    <div v-for="visit in visitations" @click="currentVisitation=visit; visitation_selected=false">{{visit}}</div>
                 </div>
             </div>
 
             <div class="overlay" v-if="status_selected">
                 <div class="optionWrap2">
-                    <option v-for="status in statuses" @click="currentStatus=status; status_selected=false">{{status}}</option>
+                    <div v-for="status in statuses" @click="currentStatus=status; status_selected=false">{{status}}</div>
                 </div>
             </div>
 
             <div class="overlay" v-if="condition_selected">
                 <div class="optionWrap2 optionWrap3">
-                    <option v-for="condition in conditions" @click="currentCondition=condition; condition_selected=false">{{condition}}</option>
+                    <div v-for="condition in conditions" @click="currentCondition=condition; condition_selected=false">{{condition}}</div>
                 </div>
             </div>
         </div>
@@ -222,7 +222,7 @@
                 <div class="title selectTitle"><img class="x" src="icons/x.svg" @click="page='main'">Select Trail or Segment</div>
             </div>
             <div class="optionWrap" v-model="currentTrail">
-                <option v-for="trail in trails" @click="currentTrail=trail; page='main'">{{trail}}</option>
+                <div class="pick" v-for="trail in trails" @click="currentTrail=trail; page='main'">{{trail}}</div>
             </div>
             <button class="cancel" @click="page='main'">Cancel</button>
         </div>
@@ -232,7 +232,7 @@
                 <div class="title selectTitle"><img class="x" src="icons/x.svg" @click="page='main'">Select Weather Condition</div>
             </div>
             <div class="optionWrap" v-model="currentWeather">
-                <option v-for="weather in weatherConditions" @click="currentWeather=weather; page='main'">{{weather}}</option>
+                <div v-for="weather in weatherConditions" @click="currentWeather=weather; page='main'">{{weather}}</div>
             </div>
             <button class="cancel" @click="page='main'">Cancel</button>
         </div>

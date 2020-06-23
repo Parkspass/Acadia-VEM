@@ -196,7 +196,9 @@ h2{
 }
 
 /* Selecting Options */
-
+.pick{
+    line-height: 14px;
+}
 .optionWrap{
     margin: 16px;
 }
