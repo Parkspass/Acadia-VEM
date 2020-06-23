@@ -16,7 +16,7 @@
     <div id="app">
         <div v-if="page=='main'">
             <div class="appBar"> <!-- App bar for login page -->
-                <div class="title"><img class="bison" src="icons/bison green.svg">Acadia VEM</div>
+                <div class="title"><img class="bison" src="icons/bisonGreen.svg">Acadia VEM</div>
             </div>
             <div class="wrapper">
                 <div class="contentWrapper">
@@ -48,7 +48,7 @@
                 <div class="contentWrapper">
                     <!-- on foot -->
                     <div class="lineWrapper" @click="footClicked()">
-                        <img class="lineIcon" src="icons/directions_walk-24px 1.svg">
+                        <img class="lineIcon" src="icons/walking.svg">
                         <div class="line">On Foot</div>
                         <img class="arrow" src="icons/arrow.svg" :style="`transform: rotate(${footRotation}deg);`">
                     </div>
@@ -57,18 +57,18 @@
                         <div v-if="foot_selected" class="countContainer left" @click="footUp+=1">
                             <h1>Number of Encounters</h1>
                             <h2>{{footUp}}</h2>
-                            <img class="countBtn" src="icons/up walking.svg">
+                            <img class="countBtn" src="icons/upWalk.svg">
                         </div>
                         <div v-if="foot_selected" class="countContainer right" @click="footDown+=1">
                             <h1>Number of Encounters</h1>
                             <h2>{{footDown}}</h2>
-                            <img class="countBtn" src="icons/down walking.svg">
+                            <img class="countBtn" src="icons/downWalk.svg">
                         </div>
                     </div>
 
                     <!-- Bike -->
                     <div class="lineWrapper" @click="bikeClicked()">
-                        <img class="lineIcon" src="icons/directions_bike-24px 1.svg">
+                        <img class="lineIcon" src="icons/biking.svg">
                         <div class="line">Bike</div>
                         <img class="arrow" src="icons/arrow.svg" :style="`transform: rotate(${bikeRotation}deg);`">
                     </div>
@@ -77,12 +77,12 @@
                         <div v-if="bike_selected" class="countContainer left" @click="bikeUp+=1">
                             <h1>Number of Encounters</h1>
                             <h2>{{bikeUp}}</h2>
-                            <img class="countBtn" src="icons/up biking.svg">
+                            <img class="countBtn" src="icons/upBike.svg">
                         </div>
                         <div v-if="bike_selected" class="countContainer right" @click="bikeDown+=1">
                             <h1>Number of Encounters</h1>
                             <h2>{{bikeDown}}</h2>
-                            <img class="countBtn" src="icons/down biking.svg">
+                            <img class="countBtn" src="icons/downBike.svg">
                         </div>
                     </div>
 
@@ -97,12 +97,12 @@
                         <div v-if="e_selected" class="countContainer left" @click="eUp+=1">
                             <h1>Number of Encounters</h1>
                             <h2>{{eUp}}</h2>
-                            <img class="countBtn" src="icons/up ebiking.svg">
+                            <img class="countBtn" src="icons/upEbike.svg">
                         </div>
                         <div v-if="e_selected" class="countContainer right" @click="eDown+=1">
                             <h1>Number of Encounters</h1>
                             <h2>{{eDown}}</h2>
-                            <img class="countBtn" src="icons/down ebiking-1.svg">
+                            <img class="countBtn" src="icons/downEbike.svg">
                         </div>
                     </div>
 
@@ -117,18 +117,18 @@
                         <div v-if="horse_selected" class="countContainer left" @click="horseUp+=1">
                             <h1>Number of Encounters</h1>
                             <h2>{{horseUp}}</h2>
-                            <img class="countBtn" src="icons/up horseback riding.svg">
+                            <img class="countBtn" src="icons/upHorse.svg">
                         </div>
                         <div v-if="horse_selected" class="countContainer right" @click="horseDown+=1">
                             <h1>Number of Encounters</h1>
                             <h2>{{horseDown}}</h2>
-                            <img class="countBtn" src="icons/down horseback riding.svg">
+                            <img class="countBtn" src="icons/downHorse.svg">
                         </div>
                     </div>
 
                     <!-- Dog -->
                     <div class="lineWrapper" @click="dogClicked()">
-                        <img class="lineIcon" src="icons/dog off leash.svg">
+                        <img class="lineIcon" src="icons/dog.svg">
                         <div class="line">Dog Off Leash</div>
                         <img class="arrow" src="icons/arrow.svg" :style="`transform: rotate(${dogRotation}deg);`">
                     </div>
@@ -137,12 +137,12 @@
                         <div v-if="dog_selected" class="countContainer left" @click="dogUp+=1">
                             <h1>Number of Encounters</h1>
                             <h2>{{dogUp}}</h2>
-                            <img class="countBtn" src="icons/up dog off leash.svg">
+                            <img class="countBtn" src="icons/upDog.svg">
                         </div>
                         <div v-if="dog_selected" class="countContainer right" @click="dogDown+=1">
                             <h1>Number of Encounters</h1>
                             <h2>{{dogDown}}</h2>
-                            <img class="countBtn" src="icons/down dog off leash.svg">
+                            <img class="countBtn" src="icons/downDog.svg">
                         </div>
                     </div>
                 </div>

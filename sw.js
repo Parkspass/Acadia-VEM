@@ -1,6 +1,6 @@
 /*jshint esversion: 6 */
 
-const staticCacheName = 'site-static-v4'; // Need to change version number ANYTIME we change HTML or CSS files. This is how we get the app to update. The browser needs to detect a change in the service worker.
+const staticCacheName = 'site-static-v5'; // Need to change version number ANYTIME we change HTML or CSS files. This is how we get the app to update. The browser needs to detect a change in the service worker.
 const assets = [
     '/', // caches all reqeust responses from server
     '/index.html',
@@ -8,9 +8,27 @@ const assets = [
     '/style.css',
     '/favicon.ico',
     '/icons',
-    '/fonts',
+    '/fonts/Roboto/Roboto-Regular.ttf',
+    '/fonts/Roboto_Slab/static/RobotoSlab-Regular.ttf',
     '/icons/x.svg',
-    'icons/alert.svg'
+    '/icons/alert.svg',
+    '/icons/bisonGreen.jpg',
+    '/icons/camera.svg',
+    '/icons/upWalk.svg',
+    '/icons/downWalk.svg',
+    '/icons/upBike.svg',
+    '/icons/downBike.svg',
+    '/icons/upEbike.svg',
+    '/icons/downEbike.svg',
+    '/icons/upHorse.svg',
+    '/icons/downHorse.svg',
+    '/icons/upDog.svg',
+    '/icons/downDog.svg',
+    '/icons/walking.svg',
+    '/icons/biking.svg',
+    '/icons/ebike.svg',
+    '/icons/horse.svg',
+    '/icons/dog.svg',
 ];
 
 // Install service worker

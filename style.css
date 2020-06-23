@@ -13,6 +13,7 @@ html, body{
     padding: 0;
     min-height: 100%;
     overflow-x: hidden;
+    touch-action: manipulation;
 }
 body, textarea{
     font-family: 'myRoboto';
@@ -196,8 +197,8 @@ h2{
 }
 
 /* Selecting Options */
-.pick{
-    line-height: 14px;
+.optionWrap div, .optionWrap2 div{
+    line-height: 38px;
 }
 .optionWrap{
     margin: 16px;
@@ -212,7 +213,7 @@ h2{
     margin: auto;
     top: 0;
     bottom: 0;
-    padding-top: 16px;
+    padding-top: 4px;
     padding-left: 16px;
     padding-right: 16px;
     border-radius: 8px;
@@ -236,6 +237,7 @@ option{
     border-radius: 4px;
     background-color: #f8f8f8;
     resize: none;
+    margin-top: 16px;
 }
 .notesBtn, .cancel{
     width: 72px;
