@@ -1,6 +1,6 @@
 {
-    "name": "Acadia Count",
-    "short_name": "AcadiaCount",
+    "name": "Acadia VEM",
+    "short_name": "AcadiaVEM",
     "start_url": ".",
     "display": "standalone",
     "orientation": "portrait-primary",

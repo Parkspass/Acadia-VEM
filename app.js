@@ -47,14 +47,14 @@ var app = new Vue({
         statuses: ['Clear', 'Minor Issue', 'Significant Issue', 'Closed or Major Issue'],
         conditions: ['Dry/Normal Summer Conditions', 'Mostly Dry (some water)', 'Wet and Slippery', 'Snow', 'Some Snow', 'Snow and Ice'],
 
-        currentName: 'Staff/Vip Name(s)',
+        currentName: 'Add Staff/Vip Name(s)',
         currentDate: '',
-        currentTrail: 'Trail or Segment Name',
-        currentWeather: 'Weather',
-        currentNotes: 'Notes',
-        currentVisitation: 'Visitation',
-        currentStatus: 'Trail Status',
-        currentCondition: 'Trail Conditions',
+        currentTrail: 'Select Trail or Segment Name',
+        currentWeather: 'Select Weather',
+        currentNotes: 'Add Notes',
+        currentVisitation: 'Select Visitation',
+        currentStatus: 'Select Trail Status',
+        currentCondition: 'Select Trail Conditions',
 
         name_selected: false,
         date_selected: false,
@@ -146,23 +146,31 @@ var app = new Vue({
         },
         nameClicked: function(){
             this.name_selected = true;
-            if (this.currentName == "Staff/Vip Name(s)"){
+            if (this.currentName == "Add Staff/Vip Name(s)"){
                 this.currentName = "";
             }
         },
         outsideName: function(){
             this.name_selected = false;
             this.nameError = false;
-            if(this.currentName == "" || this.currentName == "Staff/Vip Name(s)"){
-                this.currentName = "Staff/Vip Name(s)";
+            if(this.currentName == "" || this.currentName == "Add Staff/Vip Name(s)"){
+                this.currentName = "Add Staff/Vip Name(s)";
                 this.nameError = true;
             }
         },
         trailClicked: function(){
             this.page = "trailSelect";
+            this.name_selected = false;
         },
         weatherClicked: function(){
             this.page = "weatherSelect";
+        },
+        weatherBack: function(refName){
+            this.page = "main";
+            this.$nextTick(() => this.$refs.weather.scroll(refName));
+        },
+        scroll: function(index){
+            document.getElementById(index).scrollIntoView();
         },
 
         // BUTTONS
@@ -214,14 +222,14 @@ var app = new Vue({
         doneClicked: function(){
             this.notes_selected = false;
             if(this.currentNotes == ""){
-                this.currentNotes = "Notes";
+                this.currentNotes = "Add Notes";
             }
         },
         sendClicked: function(){
             var endDate = new Date();
             this.endTime = endDate.getHours() + ":" + endDate.getMinutes() + ":" + endDate.getSeconds();
             this.checkNulls();
-            if (this.currentName && this.currentName != "Staff/Vip Name(s)" && this.currentDate) {
+            if (this.currentName && this.currentName != "Add Staff/Vip Name(s)" && this.currentDate) {
                 //The email call should go here:
                 //->
                 var park = "Acadia%20Data%20Submission";
@@ -250,7 +258,7 @@ var app = new Vue({
                     this.currentNotesSending + ";"
                 ;
             }else {
-                if (!this.currentName || this.currentName == "Staff/Vip Name(s)") {
+                if (!this.currentName || this.currentName == "Add Staff/Vip Name(s)") {
                     this.nameError = true;
                 }
                 if (!this.currentDate) {
@@ -259,37 +267,37 @@ var app = new Vue({
             }
         },
         checkNulls: function(){
-            if (this.currentTrail == "Trail or Segment Name"){
+            if (this.currentTrail == "Select Trail or Segment Name"){
                 this.currentTrailSending = null;
             }else{
                 this.currentTrailSending = this.currentTrail;
             }
 
-            if(this.currentWeather == "Weather"){
+            if(this.currentWeather == "Select Weather"){
                 this.currentWeatherSending = null;
             }else{
                 this.currentWeatherSending = this.currentWeather;
             }
 
-            if(this.currentNotes == "Notes"){
+            if(this.currentNotes == "Add Notes"){
                 this.currentNotesSending = null;
             }else{
                 this.currentNotesSending = this.currentNotes;
             }
 
-            if(this.currentVisitation == "Visitation"){
+            if(this.currentVisitation == "Select Visitation"){
                 this.currentVisitationSending = null;
             }else{
                 this.currentVisitationSending = this.currentVisitation;
             }
 
-            if(this.currentStatus == "Trail Status"){
+            if(this.currentStatus == "Select Trail Status"){
                 this.currentStatusSending = null;
             }else{
                 this.currentStatusSending = this.currentStatus;
             }
 
-            if(this.currentCondition == "Trail Conditions"){
+            if(this.currentCondition == "Select Trail Conditions"){
                 this.currentConditionSending = null;
             }else{
                 this.currentConditionSending = this.currentCondition;

@@ -4,37 +4,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
     <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
     <meta content="utf-8" http-equiv="encoding">
-    <title>Acadia Counting</title>
+    <title>Acadia VEM</title>
     <link rel="stylesheet" type="text/css" href="style.css">
     <link rel="manifest" href="manifest.json">
     <!-- ios Support -->
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
     <meta name="apple-mobile-web-app-status-bar" content="#7E8959">
     <meta name="theme-color" content="#7E8959">
+    <link rel="apple-touch-startup-image" href="icons/pwa_icons/640x1136.png" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
+    <link rel="apple-touch-startup-image" href="icons/pwa_icons/750x1294.png" media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
+    <link rel="apple-touch-startup-image" href="icons/pwa_icons/1242x2148.png" media="(device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+    <link rel="apple-touch-startup-image" href="icons/pwa_icons/1125x2436.png" media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+    <link rel="apple-touch-startup-image" href="icons/pwa_icons/1536x2048.png" media="(min-device-width: 768px) and (max-device-width: 1024px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait)">
+    <link rel="apple-touch-startup-image" href="icons/pwa_icons/1668x2224.png" media="(min-device-width: 834px) and (max-device-width: 834px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait)">
+    <link rel="apple-touch-startup-image" href="icons/pwa_icons/2048x2732.png" media="(min-device-width: 1024px) and (max-device-width: 1024px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait)">
 </head>
 <body>
     <div id="app">
         <div v-if="page=='main'">
             <div class="appBar"> <!-- App bar for login page -->
-                <div class="title"><img class="bison" src="icons/bisonGreen.svg">Acadia VEM</div>
+                <div class="title">
+                    <img class="bison" src="icons/bisonGreen.svg">
+                    <div class="titleContainer">
+                        <h1 class="titleText">Acadia VEM</h1>
+                        <p class="date">{{currentDate}}</p>
+                    </div>
+                </div>
             </div>
             <div class="wrapper">
                 <div class="contentWrapper">
                     <div class="lineWrapper" @click="nameClicked" :class="{lineFocus:name_selected, errorBorder:nameError}">
                         <img class="lineIcon" src="icons/name_button.svg">
-                        <input v-if="name_selected" v-model="currentName" class="lineInput">
+                        <input v-model="currentName" class="lineInput">
                         <div class="line" v-else>{{currentName}}</div>
                     </div>
                     <div v-if="nameError">
                         <ul class="ul2">
                             <li v-if="nameError" class="errorMessages"><img class="errorImg" src="icons/alert.svg">Name required.</li>
                         </ul>
-                    </div>
-
-                    <div class="lineWrapper" @click="outsideName">
-                        <img class="lineIcon" src="icons/date_button.svg">
-                        <input v-if="date_selected" class="lineInput">
-                        <div class="line" v-else>{{currentDate}}</div>
                     </div>
 
                     <div class="lineWrapper" @click="trailClicked(), outsideName" :class="{lineFocus:trail_selected}">
@@ -150,7 +157,7 @@
 
             <div class="wrapper2" @click="outsideName">
                 <div class="contentWrapper">
-                    <div class="lineWrapper" @click="weatherClicked">
+                    <div class="lineWrapper" id="weather" ref="weather" @click="weatherClicked">
                         <img class="lineIcon" src="icons/weather_button.svg">
                         <div class="line">{{currentWeather}}</div>
                     </div>
@@ -229,12 +236,12 @@
 
         <div class="wrapper" v-if="page=='weatherSelect'">
             <div class="appBar"> <!-- App bar for weather select page -->
-                <div class="title selectTitle"><img class="x" src="icons/x.svg" @click="page='main'">Select Weather Condition</div>
+                <div class="title selectTitle"><img class="x" src="icons/x.svg" @click="weatherBack('weather')">Select Weather Condition</div>
             </div>
             <div class="optionWrap" v-model="currentWeather">
-                <div v-for="weather in weatherConditions" @click="currentWeather=weather; page='main'">{{weather}}</div>
+                <div v-for="weather in weatherConditions" @click="currentWeather=weather; weatherBack('weather')">{{weather}}</div>
             </div>
-            <button class="cancel" @click="page='main'">Cancel</button>
+            <button class="cancel" @click="weatherBack('weather')">Cancel</button>
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>

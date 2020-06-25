@@ -29,6 +29,13 @@ const assets = [
     '/icons/ebike.svg',
     '/icons/horse.svg',
     '/icons/dog.svg',
+    '/icons/pwa_icons/640x1136.png',
+    '/icons/pwa_icons/750x1294.png',
+    '/icons/pwa_icons/1242x2148.png',
+    '/icons/pwa_icons/1125x2436.png',
+    '/icons/pwa_icons/1536x2048.png',
+    '/icons/pwa_icons/1668x2224.png',
+    '/icons/pwa_icons/2048x2732.png',
 ];
 
 // Install service worker

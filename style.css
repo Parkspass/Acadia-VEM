@@ -91,12 +91,13 @@ textarea{
     vertical-align: middle;
     width: 80%;
     border: none;
-    height: 90%;
+    height: 95%;
     outline: none;
     font-size: 16px;
 }
 .lineFocus{
     border-bottom: 2px solid #7E8959;
+    background: #F2F2F2;
 }
 .arrow{
     vertical-align: middle;
@@ -194,6 +195,20 @@ h2{
     width: 20px;
     margin-right: 20px;
     vertical-align: middle;
+}
+.titleContainer{
+    clear: both;
+    display: inline-block;
+    vertical-align: middle;
+    margin-top: 10px;
+}
+.titleText{
+    font-size: 20px;
+    margin: 0px !important;
+}
+.date{
+    font-size: 11px;
+    margin: 4px 0px 4px 0px !important;
 }
 @media only screen and (max-width: 330px){
     h1{
