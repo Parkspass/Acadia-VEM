@@ -21,21 +21,29 @@
 </head>
 <body>
     <div id="app">
-        <div v-if="page=='main'">
-            <div class="appBar"> <!-- App bar for login page -->
-                <div class="title">
-                    <img class="bison" src="icons/bisonGreen.svg">
-                    <div class="titleContainer">
-                        <h1 class="titleText">Acadia VEM</h1>
-                        <p class="date">{{currentDate}}</p>
-                    </div>
+        <div class="appBar" v-if="page!='weatherSelect' && page!='trailSelect'"> <!-- App bar for login page -->
+            <div class="title">
+                <img class="bison" src="icons/bisonGreen.svg">
+                <div class="titleContainer">
+                    <h1 class="titleText">Acadia VEM</h1>
+                    <p class="date">{{currentDate}}</p>
                 </div>
+                <img class="hamburger" src="icons/hamburger.svg" @click="hamburgerClicked">
             </div>
+        </div>
+        <div class="overlayHamburger" v-if="hamburger_selected">
+            <div class="hamburgerWrap">
+                <h4 class="overlayTitle menuTitle">Menu <img class="x xBar" src="icons/x.svg" @click="hamburger_selected=false"></h4>
+                <div class="hamburgerOpt" @click="page='main'; hamburger_selected=false">VEM</div>
+                <div class="hamburgerOpt" @click="page='data'; hamburger_selected=false">Utilizing Data</div>
+            </div>
+        </div>
+        <div v-if="page=='main'">
             <div class="wrapper">
                 <div class="contentWrapper">
                     <div class="lineWrapper" @click="nameClicked" :class="{lineFocus:name_selected, errorBorder:nameError}">
                         <img class="lineIcon" src="icons/name_button.svg">
-                        <input v-model="currentName" class="lineInput">
+                        <input v-model="currentName" class="lineInput" :class="{backGray:name_selected}">
                         <div class="line" v-else>{{currentName}}</div>
                     </div>
                     <div v-if="nameError">
@@ -44,14 +52,14 @@
                         </ul>
                     </div>
 
-                    <div class="lineWrapper" @click="trailClicked(), outsideName" :class="{lineFocus:trail_selected}">
+                    <div class="lineWrapper" @click="trailClicked(), outside" :class="{lineFocus:trail_selected}">
                         <img class="lineIcon" src="icons/trail_button.svg">
                         <div class="line">{{currentTrail}}</div>
                     </div>
                 </div>
             </div>
 
-            <div class="wrapper" @click="outsideName">
+            <div class="wrapper" @click="outside">
                 <div class="contentWrapper">
                     <!-- on foot -->
                     <div class="lineWrapper" @click="footClicked()">
@@ -155,7 +163,7 @@
                 </div>
             </div>
 
-            <div class="wrapper2" @click="outsideName">
+            <div class="wrapper2" @click="outside">
                 <div class="contentWrapper">
                     <div class="lineWrapper" id="weather" ref="weather" @click="weatherClicked">
                         <img class="lineIcon" src="icons/weather_button.svg">
@@ -183,7 +191,7 @@
                     </div>
 
                     <input class="hide_file" type="file" ref="file" name="image" accept="image/*" capture="environment" style="display:none;border:none;">
-                    <button id="addPicture" @click="$refs.file.click()">ADD PICTURE<img id="camera" src="icons/camera.svg"></button>
+                    <button id="addPicture" @click="$refs.file.click()">TAKE PICTURE<img id="camera" src="icons/camera.svg"></button>
                     <p id="centerP">Please insert the taken photo(s) into the email.</p>
 
                     <div v-if="nameError || dateError">
@@ -199,6 +207,7 @@
 
             <div class="overlay" v-if="notes_selected">
                 <div class="optionWrap2 notesWrap">
+                    <h4 class="overlayTitle">Notes</h4>
                     <textarea type="text" class="notes" maxlength="300" v-model="currentNotes">{{currentNotes}}</textarea>
                     <button class="notesBtn clear" @click="currentNotes=''">Clear</button>
                     <button class="notesBtn done" @click="doneClicked">Done</button>
@@ -207,18 +216,21 @@
 
             <div class="overlay" v-if="visitation_selected">
                 <div class="optionWrap2">
+                    <h4 class="overlayTitle">Visitation</h4>
                     <div v-for="visit in visitations" @click="currentVisitation=visit; visitation_selected=false">{{visit}}</div>
                 </div>
             </div>
 
             <div class="overlay" v-if="status_selected">
                 <div class="optionWrap2">
+                    <h4 class="overlayTitle">Trail Status</h4>
                     <div v-for="status in statuses" @click="currentStatus=status; status_selected=false">{{status}}</div>
                 </div>
             </div>
 
             <div class="overlay" v-if="condition_selected">
                 <div class="optionWrap2 optionWrap3">
+                    <h4 class="overlayTitle">Trail Condition</h4>
                     <div v-for="condition in conditions" @click="currentCondition=condition; condition_selected=false">{{condition}}</div>
                 </div>
             </div>
@@ -242,6 +254,22 @@
                 <div v-for="weather in weatherConditions" @click="currentWeather=weather; weatherBack('weather')">{{weather}}</div>
             </div>
             <button class="cancel" @click="weatherBack('weather')">Cancel</button>
+        </div>
+
+        <div v-if="page=='data'">
+            <div class="wrapper3">
+                <h1 class="dataTitle">Utilizing Data</h1>
+                <h5 class="dataHeaders">Copy email:</h5>
+                <img class="dataPic" src="icons/copyEmail.png">
+                <h5 class="dataHeaders">Paste into cell:</h5>
+                <img class="dataPic" src="icons/paste.png">
+                <h5 class="dataHeaders">Click on clipboard and select Split text to columns:</h5>
+                <img class="dataPic" src="icons/split.png">
+                <h5 class="dataHeaders">Click on Separator and select Semicolon:</h5>
+                <img class="dataPic" src="icons/semicolon.png">
+                <h5 class="dataHeaders">Final outcome:</h5>
+                <img class="dataPic" src="icons/start2.png">
+            </div>
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>

@@ -55,7 +55,8 @@ var app = new Vue({
         currentVisitation: 'Select Visitation',
         currentStatus: 'Select Trail Status',
         currentCondition: 'Select Trail Conditions',
-
+        
+        hamburger_selected: false,
         name_selected: false,
         date_selected: false,
         trail_selected: false,
@@ -133,6 +134,10 @@ var app = new Vue({
             this.latitude = latitude;
             this.longitude = longitude;
         },
+        // HAMBURGER
+        hamburgerClicked: function(){
+            this.hamburger_selected = true;
+        },
 
         // INPUTS
         loadDate: function(){
@@ -150,7 +155,7 @@ var app = new Vue({
                 this.currentName = "";
             }
         },
-        outsideName: function(){
+        outside: function(){
             this.name_selected = false;
             this.nameError = false;
             if(this.currentName == "" || this.currentName == "Add Staff/Vip Name(s)"){
@@ -171,6 +176,13 @@ var app = new Vue({
         },
         scroll: function(index){
             document.getElementById(index).scrollIntoView();
+        },
+        hide: function(){
+            this.notes_selected = false;
+        },
+        closeEvent: function () {
+            console.log('close event called');
+            this.hide();
         },
 
         // BUTTONS

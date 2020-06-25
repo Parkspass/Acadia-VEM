@@ -12,6 +12,7 @@ const assets = [
     '/fonts/Roboto_Slab/static/RobotoSlab-Regular.ttf',
     '/icons/x.svg',
     '/icons/alert.svg',
+    '/icons/hamburger.svg',
     '/icons/bisonGreen.jpg',
     '/icons/camera.svg',
     '/icons/upWalk.svg',
