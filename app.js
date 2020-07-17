@@ -1,5 +1,4 @@
 /*jshint esversion: 6 */
-console.log('connected');
 
 if('serviceWorker' in navigator){
     navigator.serviceWorker.register('sw.js')
@@ -12,6 +11,8 @@ var app = new Vue({
     data: {
         dialogm1: '',
         dialog: false,
+        showInstallMessage: false,
+        showAndroidInstallMessage: false,
         page: 'main',
         trails: ['Bald Peak and Parkman Mountain',
                 'Beachcroft and Champlain South Ridge',
@@ -101,6 +102,7 @@ var app = new Vue({
     },
     created: function(){
         this.loadDate();
+        this.PWA_popup();
     },
     //used to find location:
     mounted(){
@@ -118,6 +120,24 @@ var app = new Vue({
         }
     },
     methods: {
+        PWA_popup: function(){
+            const isIos = () => {
+                const userAgent = window.navigator.userAgent.toLowerCase();
+                return /iphone|ipad|ipod/.test( userAgent );
+            };
+              // Detects if device is in standalone mode
+            const isInStandaloneMode = () => ('standalone' in window.navigator) && (window.navigator.standalone);
+              
+              // Checks if should display install popup notification:
+            if (isIos() && !isInStandaloneMode()) {
+                this.showInstallMessage = true;
+            }else if(!isIos() && !isInStandaloneMode()) {
+                this.showAndroidInstallMessage = true;
+            }
+
+            setTimeout(() => this.showInstallMessage = false, 15000);
+            setTimeout(() => this.showAndroidInstallMessage = false, 15000);
+        },
         // LOCATION
         handleGetGeoLocation(pos){
             var crd = pos.coords;
@@ -125,11 +145,6 @@ var app = new Vue({
             const status = document.querySelector('#status');
             const latitude  = crd.latitude;
             const longitude = crd.longitude;
-
-            console.log('Your current position is:');
-            console.log(`Latitude : ${latitude}`);
-            console.log(`Longitude: ${longitude}`);
-            console.log(`More or less ${crd.accuracy} meters.`);
 
             this.latitude = latitude;
             this.longitude = longitude;
@@ -181,7 +196,6 @@ var app = new Vue({
             this.notes_selected = false;
         },
         closeEvent: function () {
-            console.log('close event called');
             this.hide();
         },
 
