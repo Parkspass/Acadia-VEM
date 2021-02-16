@@ -13,7 +13,7 @@ const assets = [
     '/icons/x.svg',
     '/icons/alert.svg',
     '/icons/hamburger.svg',
-    '/icons/bisonGreen.jpg',
+    '/icons/bisonOrange.jpg',
     '/icons/camera.svg',
     '/icons/upWalk.svg',
     '/icons/downWalk.svg',

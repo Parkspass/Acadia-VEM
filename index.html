@@ -4,12 +4,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
     <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
     <meta content="utf-8" http-equiv="encoding">
-    <title>Acadia VEM</title>
+    <title>Parks VEM</title>
     <!-- Links -->
     <link rel="stylesheet" type="text/css" href="style.css">
     <link rel="manifest" href="manifest.json">
     <!-- iOS PWA Support -->
-    <meta name="theme-color" content="#7E8959"/>
+    <meta name="theme-color" content="#FF6E00"/>
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-title" content="Acadia VEM">
     <meta name="apple-mobile-web-app-status-bar" content="black">
@@ -29,9 +29,9 @@
     <div id="app">
         <div class="appBar" v-if="page!='weatherSelect' && page!='trailSelect'"> <!-- App bar for login page -->
             <div class="title">
-                <img class="bison" src="icons/bisonGreen.svg">
+                <img class="bison" src="icons/bisonOrange.svg">
                 <div class="titleContainer">
-                    <h1 class="titleText">Acadia VEM</h1>
+                    <h1 class="titleText">{{location}}</h1>
                     <p class="date">{{currentDate}}</p>
                 </div>
                 <img class="hamburger" src="icons/hamburger.svg" @click="hamburgerClicked">
@@ -40,12 +40,26 @@
         <div class="overlayHamburger" v-if="hamburger_selected">
             <div class="hamburgerWrap">
                 <h4 class="overlayTitle menuTitle">Menu <img class="x xBar" src="icons/x.svg" @click="hamburger_selected=false"></h4>
-                <div class="hamburgerOpt" @click="page='main'; hamburger_selected=false">VEM</div>
+                <div class="hamburgerOpt" @click="parkSearching()">Select a Park</div>
                 <div class="hamburgerOpt" @click="page='data'; hamburger_selected=false">Utilizing Data</div>
             </div>
         </div>
+        <div v-if="page=='parkSearch'">
+
+            <div>
+                <input id="searchInputBox"  placeholder='Search a park ...' onfocus="this.placeholder = ''" onblur="this.placeholder = '  Search a park ...'" v-model="filterSearch"></input>
+                <img src="icons/search_button_white.svg" id="whiteSearchIcon">
+            </div>
+
+            <ol>
+                <li v-for = "item in filteredSearch" :key="item.park" class="parkOption" @click="parkSelected(item)">
+                    {{item.park}}
+                </li>
+            </ol>
+
+        </div>
         <div v-if="page=='main'">
-            <div class="wrapper">
+            <div class="wrapper">    
                 <div class="contentWrapper">
                     <div class="lineWrapper" @click="nameClicked" :class="{lineFocus:name_selected, errorBorder:nameError}">
                         <img class="lineIcon" src="icons/name_button.svg">
@@ -75,15 +89,21 @@
                     </div>
                     
                     <div style="display: block;">
-                        <div v-if="foot_selected" class="countContainer left" @click="footUp+=1">
+                        <div class="countContainer left">
                             <h1>Number of Encounters</h1>
-                            <h2>{{footUp}}</h2>
-                            <img class="countBtn" src="icons/upWalk.svg">
+                            <input class="counting" type=number v-model="footUp">
+                            <div v-if="foot_selected" @click="footUpPlus">
+                                <div v-bind:class="footFade" v-on:click="buttonFade=!buttonFade">
+                                    <img class="countBtn" src="icons/upWalk.svg" >
+                                </div>
+                            </div>
                         </div>
-                        <div v-if="foot_selected" class="countContainer right" @click="footDown+=1">
+                        <div class="countContainer right">
                             <h1>Number of Encounters</h1>
-                            <h2>{{footDown}}</h2>
-                            <img class="countBtn" src="icons/downWalk.svg">
+                            <input class="counting" type="number" v-model="footDown">
+                            <div v-if="foot_selected"  @click="footDownPlus">
+                                <img class="countBtn" src="icons/downWalk.svg">
+                            </div>
                         </div>
                     </div>
 
@@ -95,15 +115,19 @@
                     </div>
 
                     <div style="display: block;">
-                        <div v-if="bike_selected" class="countContainer left" @click="bikeUp+=1">
+                        <div class="countContainer left">
                             <h1>Number of Encounters</h1>
-                            <h2>{{bikeUp}}</h2>
-                            <img class="countBtn" src="icons/upBike.svg">
+                            <input class="counting" type="number" v-model="bikeUp">
+                            <div v-if="bike_selected"  @click="bikeUpPlus">
+                                <img class="countBtn" src="icons/upBike.svg">
+                            </div>
                         </div>
-                        <div v-if="bike_selected" class="countContainer right" @click="bikeDown+=1">
+                        <div class="countContainer right">
                             <h1>Number of Encounters</h1>
-                            <h2>{{bikeDown}}</h2>
-                            <img class="countBtn" src="icons/downBike.svg">
+                            <input class="counting" type="number" v-model="bikeDown">
+                            <div v-if="bike_selected"  @click="bikeDownPlus">
+                                <img class="countBtn" src="icons/downBike.svg">
+                            </div>
                         </div>
                     </div>
 
@@ -115,15 +139,19 @@
                     </div>
 
                     <div style="display: block;">
-                        <div v-if="e_selected" class="countContainer left" @click="eUp+=1">
+                        <div class="countContainer left">
                             <h1>Number of Encounters</h1>
-                            <h2>{{eUp}}</h2>
-                            <img class="countBtn" src="icons/upEbike.svg">
+                            <input class="counting" type="number" v-model="eUp">
+                            <div v-if="e_selected"  @click="eUpPlus">
+                                <img class="countBtn" src="icons/upEbike.svg">
+                            </div>
                         </div>
-                        <div v-if="e_selected" class="countContainer right" @click="eDown+=1">
+                        <div class="countContainer right">
                             <h1>Number of Encounters</h1>
-                            <h2>{{eDown}}</h2>
-                            <img class="countBtn" src="icons/downEbike.svg">
+                            <input class="counting" type="number" v-model="eDown">
+                            <div v-if="e_selected"  @click="eDownPlus">
+                                <img class="countBtn" src="icons/downEbike.svg">
+                            </div>
                         </div>
                     </div>
 
@@ -135,15 +163,19 @@
                     </div>
 
                     <div style="display: block;">
-                        <div v-if="horse_selected" class="countContainer left" @click="horseUp+=1">
+                        <div class="countContainer left">
                             <h1>Number of Encounters</h1>
-                            <h2>{{horseUp}}</h2>
-                            <img class="countBtn" src="icons/upHorse.svg">
+                            <input class="counting" type="number" v-model="horseUp">
+                            <div v-if="horse_selected"  @click="horseUpPlus">
+                                <img class="countBtn" src="icons/upHorse.svg">
+                            </div>
                         </div>
-                        <div v-if="horse_selected" class="countContainer right" @click="horseDown+=1">
+                        <div class="countContainer right" >
                             <h1>Number of Encounters</h1>
-                            <h2>{{horseDown}}</h2>
-                            <img class="countBtn" src="icons/downHorse.svg">
+                            <input class="counting" type="number" v-model="horseDown">
+                            <div v-if="horse_selected" @click="horseDownPlus">
+                                <img class="countBtn" src="icons/downHorse.svg">
+                            </div>
                         </div>
                     </div>
 
@@ -155,15 +187,19 @@
                     </div>
 
                     <div style="display: block;">
-                        <div v-if="dog_selected" class="countContainer left" @click="dogUp+=1">
+                        <div class="countContainer left">
                             <h1>Number of Encounters</h1>
-                            <h2>{{dogUp}}</h2>
-                            <img class="countBtn" src="icons/upDog.svg">
+                            <input class="counting" type="number" v-model="dogUp">
+                            <div v-if="dog_selected" @click="dogUpPlus">
+                                <img class="countBtn" src="icons/upDog.svg">
+                            </div>
                         </div>
-                        <div v-if="dog_selected" class="countContainer right" @click="dogDown+=1">
+                        <div class="countContainer right">
                             <h1>Number of Encounters</h1>
-                            <h2>{{dogDown}}</h2>
-                            <img class="countBtn" src="icons/downDog.svg">
+                            <input class="counting" type="number" v-model="dogDown">
+                            <div v-if="dog_selected"  @click="dogDownPlus">
+                                <img class="countBtn" src="icons/downDog.svg">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -171,7 +207,8 @@
 
             <div class="wrapper2" @click="outside">
                 <div class="contentWrapper">
-                    <div class="lineWrapper" id="weather" ref="weather" @click="weatherClicked">
+
+                    <div class="lineWrapper"  @click="weather_selected = true">
                         <img class="lineIcon" src="icons/weather_button.svg">
                         <div class="line">{{currentWeather}}</div>
                     </div>
@@ -196,10 +233,6 @@
                         <div class="line">{{currentCondition}}</div>
                     </div>
 
-                    <input class="hide_file" type="file" ref="file" name="image" accept="image/*" capture="environment" style="display:none;border:none;">
-                    <button id="addPicture" @click="$refs.file.click()">TAKE PICTURE<img id="camera" src="icons/camera.svg"></button>
-                    <p id="centerP">Please insert the taken photo(s) into the email.</p>
-
                     <div v-if="nameError || dateError">
                         <ul>
                             <li v-if="nameError" class="errorMessages"><img class="errorImg" src="icons/alert.svg">Name required.</li>
@@ -208,6 +241,14 @@
                     </div>
 
                     <button id="send" @click="sendClicked">SEND</button>
+                </div>
+            </div>
+
+
+            <div class="overlay" v-if="weather_selected">
+                <div class="optionWrap2 optionWrap4">
+                    <h4 class="overlayTitle">Weather</h4>
+                    <div v-for="weather in weatherConditions" @click="currentWeather=weather; weather_selected=false">{{weather}}</div>
                 </div>
             </div>
 
@@ -266,20 +307,11 @@
                 <div class="title selectTitle"><img class="x" src="icons/x.svg" @click="page='main'">Select Trail or Segment</div>
             </div>
             <div class="optionWrap" v-model="currentTrail">
-                <div class="pick" v-for="trail in trails" @click="currentTrail=trail; page='main'">{{trail}}</div>
+                <div class="pick" v-for="trail in trailsList" @click="currentTrail=trail; page='main'">{{trail}}</div>
             </div>
             <button class="cancel" @click="page='main'">Cancel</button>
         </div>
 
-        <div class="wrapper" v-if="page=='weatherSelect'">
-            <div class="appBar"> <!-- App bar for weather select page -->
-                <div class="title selectTitle"><img class="x" src="icons/x.svg" @click="weatherBack('weather')">Select Weather Condition</div>
-            </div>
-            <div class="optionWrap" v-model="currentWeather">
-                <div v-for="weather in weatherConditions" @click="currentWeather=weather; weatherBack('weather')">{{weather}}</div>
-            </div>
-            <button class="cancel" @click="weatherBack('weather')">Cancel</button>
-        </div>
 
         <div v-if="page=='data'">
             <div class="wrapper3">
@@ -298,6 +330,18 @@
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script src="parks.js"></script>
     <script src="app.js"></script>
+
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="/__/firebase/8.2.2/firebase-app.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+        https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="/__/firebase/8.2.2/firebase-analytics.js"></script>
+
+    <!-- Initialize Firebase -->
+    <script src="/__/firebase/init.js"></script>
+
 </body>
 </html>

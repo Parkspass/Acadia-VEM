@@ -1,10 +1,10 @@
 {
-    "name": "Acadia VEM",
-    "short_name": "AcadiaVEM",
+    "name": "Parks VEM",
+    "short_name": "ParksVEM",
     "start_url": ".",
     "display": "standalone",
     "orientation": "portrait-primary",
-    "theme_color": "#7E8959",
+    "theme_color": "#FF6E00",
     "background_color": "#FFFFFF",
     "icons": [
         {

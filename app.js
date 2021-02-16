@@ -6,6 +6,7 @@ if('serviceWorker' in navigator){
         .catch((err) => console.log("Service Worker Not Registered", err));
 }
 
+
 var app = new Vue({
     el: '#app',
     data: {
@@ -13,36 +14,12 @@ var app = new Vue({
         dialog: false,
         showInstallMessage: false,
         showAndroidInstallMessage: false,
-        page: 'main',
-        trails: ['Bald Peak and Parkman Mountain',
-                'Beachcroft and Champlain South Ridge',
-                'Beech Mountain South Ridge Loop',
-                'Beehive Loop',
-                'Cadillac Mountain South Ridge',
-                'Canada Cliffs Loop',
-                'Dorr Mountain South Ridge Loop',
-                'Flying Mountain Loop',
-                'Giant Slide Loop',
-                'Gorge and A Murray Young Path Route',
-                'Gorham Mountain Loop',
-                'Great Head Trail',
-                'Great Meadow Loop',
-                'Jesup Path and Hemlock Road Loop',
-                'Jordan Cliffs Loop',
-                'Jordan Pond Path',
-                'North Bubble Loop',
-                'Norumbega Mountain Loop',
-                'Ocean Path',
-                'Pemetic Mountain Loop',
-                'Penobscot and Sargent Mountain Loop',
-                'Perpendicular and Razorback Loop',
-                'Precipice Loop',
-                'Saint Sauveur and Acadia Mountain',
-                'Schoodic Bike Paths',
-                'Schoodic Hiking Trails',
-                'Ship Harbor Trail',
-                'Wonderland Trail',
-            ],
+        page: 'parkSearch',
+        parkTrails: parks,
+        filterSearch: "",
+        location : "Parkdata VEM",
+        trailsList: [],
+
         weatherConditions: ['Sunny', 'Mostly Sunny', 'Cloudy', 'Thunder Storms', 'Rain Showers', 'Rain', 'Sleet', 'Snow', 'Haze', 'Smokey'],
         visitations: ['Not busy', 'Not too busy', 'Little busy', 'Busy as it gets'],
         statuses: ['Clear', 'Minor Issue', 'Significant Issue', 'Closed or Major Issue'],
@@ -99,6 +76,8 @@ var app = new Vue({
         longitude: '',
         nameError: false,
         dateError: false,
+
+        buttonFade: false,
     },
     created: function(){
         this.loadDate();
@@ -120,6 +99,18 @@ var app = new Vue({
         }
     },
     methods: {
+        parkSelected: function(location){
+            this.location = location.park;
+            this.page = "main";
+            this.trailsList = location.trails;
+        },
+
+        parkSearching:function(){
+            this.location = "Parkdata VEM";
+            this.page = 'parkSearch';
+            this.hamburger_selected = false;
+        },
+        
         PWA_popup: function(){
             const isIos = () => {
                 const userAgent = window.navigator.userAgent.toLowerCase();
@@ -200,6 +191,46 @@ var app = new Vue({
         },
 
         // BUTTONS
+        footUpPlus: function(){
+            this.footUp = parseInt(this.footUp, 10);
+            this.footUp += 1;
+        },
+        footDownPlus: function(){
+            this.footDown = parseInt(this.footDown, 10);
+            this.footDown += 1;
+        },
+        bikeUpPlus: function(){
+            this.bikeUp = parseInt(this.bikeUp, 10);
+            this.bikeUp += 1;
+        },
+        bikeDownPlus: function(){
+            this.bikeDown = parseInt(this.bikeDown, 10);
+            this.bikeDown += 1;
+        },
+        eUpPlus: function(){
+            this.eUp = parseInt(this.eUp, 10);
+            this.eUp += 1;
+        },
+        eDownPlus: function(){
+            this.eDown = parseInt(this.eDown, 10);
+            this.eDown += 1;
+        },
+        horseUpPlus: function(){
+            this.horseUp = parseInt(this.horseUp, 10);
+            this.horseUp += 1;
+        },
+        horseDownPlus: function(){
+            this.horseDown = parseInt(this.horseDown, 10);
+            this.horseDown += 1;
+        },
+        dogUpPlus: function(){
+            this.dogUp = parseInt(this.dogUp, 10);
+            this.dogUp += 1;
+        },
+        dogDownPlus: function(){
+            this.dogDown = parseInt(this.dogDown, 10);
+            this.dogDown += 1;
+        },
         footClicked: function(){
             if (this.foot_selected == true){
                 this.foot_selected = false;
@@ -245,6 +276,7 @@ var app = new Vue({
                 this.dogRotation = 180;
             }
         },
+    
         doneClicked: function(){
             this.notes_selected = false;
             if(this.currentNotes == ""){
@@ -330,5 +362,22 @@ var app = new Vue({
             }
         },
     },
+    computed: 
+    {
+        filteredSearch: function() 
+        {
+          return this.parkTrails.filter((place) =>
+            {
+          return place.park.match(this.filterSearch.charAt(0).toUpperCase() +  this.filterSearch.slice(1));
+            });
+        },
+
+        // BUTTONS fade on click 
+        footFade: function(){
+            return{
+                buttonFade: this.buttonFade
+            }
+        }
+    }
 });
 
